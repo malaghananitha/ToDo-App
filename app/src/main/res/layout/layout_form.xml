@@ -11,19 +11,21 @@
         android:layout_height="wrap_content"
         android:hint="Field 1"
         android:padding="10dp"
-        android:text="username"
         android:background="@drawable/edit_text_background"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black"
+        style="@style/CommonEditTextTextStyle"/>
 
     <EditText
         android:id="@+id/editTextField2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="password"
         android:hint="Field 2"
         android:padding="10dp"
         android:background="@drawable/edit_text_background"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black"
+        style="@style/CommonEditTextTextStyle"/>
 
     <Button
         android:id="@+id/buttonAction"
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         android:text="ACTION"
         android:backgroundTint="@color/primary_color"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/white"
+        style="@style/CommonEditTextTextStyle"/>
 
 </LinearLayout>

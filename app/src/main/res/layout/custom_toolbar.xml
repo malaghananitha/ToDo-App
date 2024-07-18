@@ -19,7 +19,7 @@
             android:layout_marginRight="40dp"
             android:contentDescription="@string/left_icon"
             android:src="@drawable/ic_turn_backpage_button"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/toolbarTitle"
@@ -27,8 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/toolbar_title"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            style="@style/CommonToolbarTitleTextStyle"/>
 
         <ImageView
             android:id="@+id/calendarIcon"
@@ -36,6 +35,6 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/right_icon"
             android:src="@drawable/ic_calendar"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

@@ -1,14 +1,27 @@
 package com.example.todoapp
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.example.todoapp.databinding.ActivityCompletedTasksBinding
 
 class CompletedTasksActivity : AppCompatActivity() {
+    //2
+    private lateinit var binding: ActivityCompletedTasksBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed_tasks)
+        //3
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_completed_tasks)
 
-        findViewById<TextView>(R.id.toolbarTitle).text = getString(R.string.completed_tasks_title)
+        binding.inclCompletedTaskToolbar.toolbarTitle.text = getString(R.string.completed_tasks_title)
+        binding.inclCompletedTaskToolbar.backpageButtonIcon.visibility = View.VISIBLE
+
+        binding.inclCompletedTaskToolbar.backpageButtonIcon.setOnClickListener{
+            finish()
+        }
+
     }
 }
