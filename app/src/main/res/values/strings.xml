@@ -1,0 +1,12 @@
+<resources>
+    <!-- Common Strings -->
+    <string name="app_name">TODO APP</string>
+    <string name="add_task">Add Task</string>
+
+    <!-- Titles for Different Activities -->
+    <string name="todo_title">TODO APP</string>
+    <string name="completed_tasks_title">Completed Tasks</string>
+    <string name="toolbar_title">toolbar_title</string>
+    <string name="left_icon">left_icon</string>
+    <string name="right_icon">right_icon</string>
+</resources>
