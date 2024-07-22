@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        tools:context=".TodoActivity">
+        tools:context=".ui.TodoActivity">
 
         <include
             android:id="@+id/incl_completed_task_toolbar"

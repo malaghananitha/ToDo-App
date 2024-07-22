@@ -1,11 +1,10 @@
-package com.example.todoapp
+package com.example.todoapp.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.todoapp.R
 import com.example.todoapp.databinding.ActivityCompletedTasksBinding
 
 class CompletedTasksActivity : AppCompatActivity() {

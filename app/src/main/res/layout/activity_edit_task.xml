@@ -1,9 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/layout_form"/>
+    <data>
 
-</LinearLayout>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+            <include
+                android:id="@+id/incl_edit_task_toolbar"
+                layout="@layout/custom_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_edit_task_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTextField1"
+                style="@style/CommonEditTextTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="43dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Title"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextField2"
+                style="@style/CommonEditTextTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="43dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Detail"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextField1" />
+
+
+            <Button
+                android:id="@+id/buttonUpdate"
+                style="@style/CommonEditTextTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="46dp"
+                android:layout_marginTop="54dp"
+                android:backgroundTint="@color/primary_color"
+                android:text="Update"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toStartOf="@+id/buttonCancel"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTextField2" />
+
+            <Button
+                android:id="@+id/buttonCancel"
+                style="@style/CommonEditTextTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="66dp"
+                android:layout_marginTop="54dp"
+                android:layout_marginRight="15dp"
+                android:backgroundTint="@color/primary_color"
+                android:text="Cancel"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/buttonUpdate"
+                app:layout_constraintTop_toBottomOf="@id/editTextField2" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+
+
+</layout>

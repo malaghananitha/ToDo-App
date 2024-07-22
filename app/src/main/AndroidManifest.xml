@@ -13,10 +13,16 @@
         android:theme="@style/Theme.ToDoApp"
         tools:targetApi="31">
         <activity
-            android:name=".AddTaskActivity"
+            android:name=".ui.AddTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.CompletedTasksActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.EditTaskActivity"
+            android:exported="true"/>
+        <activity
+            android:name=".ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +31,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TodoActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".CompletedTasksActivity"
-            android:exported="true"></activity>
+            android:name=".ui.TodoActivity"
+            android:exported="true"/>
+
+
     </application>
 
 </manifest>
