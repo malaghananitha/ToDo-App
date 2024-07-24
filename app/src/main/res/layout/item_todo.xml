@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="data"
+            type="com.example.todoapp.entity.Todo" />
 
     </data>
 
@@ -18,7 +21,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_item_todo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:alpha="@{data.isCompleted ? 0.3f : 1.0f }">
 
             <TextView
                 android:id="@+id/tv_todo_title"

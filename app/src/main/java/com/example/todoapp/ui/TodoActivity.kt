@@ -3,6 +3,7 @@ package com.example.todoapp.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -39,9 +40,13 @@ class TodoActivity : AppCompatActivity() {
         super.onResume()
         getAllTodo()
     }
+    private fun getUncompletedTodo() {
+        todoViewModel.fetchAllUncompletedTodos(this)
+    }
 
     private fun getAllTodo() {
         todoViewModel.fetchAllTodos(this)
+
     }
 
     private fun setupToolbar() {
@@ -63,12 +68,30 @@ class TodoActivity : AppCompatActivity() {
             },
             onDeleteClick = { position ->
                 lifecycleScope.launch(Dispatchers.IO) {
-                    todoViewModel.delete(position)
+                    withContext(Dispatchers.Main) {
+                        if (todoViewModel.delete(position) == 1) {
+                            Toast.makeText(
+                                this@TodoActivity,
+                                "Task deleted successfully",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+
                     withContext(Dispatchers.Main) { todoAdapter.notifyItemRemoved(position) }
                 }
 
             },
-            onCompleteClick = { todo -> /* Handle complete click */ }
+            onCompleteClick = { todo ->
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val updatedTodo = todo.copy(isCompleted = true)
+                    todoViewModel.update(updatedTodo)
+                    withContext(Dispatchers.Main) {
+                        val position = todoAdapter.currentList.indexOf(todo)
+                        todoAdapter.notifyItemChanged(position)
+                    }
+                }
+            }
         )
         binding.recyclerView.apply {
             adapter = todoAdapter
@@ -85,11 +108,13 @@ class TodoActivity : AppCompatActivity() {
 
     private fun setupBottomNavigation() {
         with(binding.bottomNavigationTodo) {
+
+             selectedItemId = 0
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.navigation_all -> {
                         // Show all the tasks
-                        true
+                        getAllTodo()
                     }
 
                     R.id.navigation_completed -> {

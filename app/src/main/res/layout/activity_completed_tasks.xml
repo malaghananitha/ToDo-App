@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
         <!-- To-Do List -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/v_completed_task_recycler"
+            android:id="@+id/recyclerViewCompletedTasks"
             tools:listitem="@layout/item_todo"
             tools:itemCount="3"
             android:layout_width="match_parent"
