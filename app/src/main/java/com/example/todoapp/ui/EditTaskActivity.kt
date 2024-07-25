@@ -48,8 +48,8 @@ class EditTaskActivity : AppCompatActivity() {
     }
 
     private fun confirmUpdateTask() {
-        val todoTitle = binding.editTextField1.text.toString()
-        val todoSubTitle = binding.editTextField2.text.toString()
+        val todoTitle = binding.editTextField1.text.toString().trim()
+        val todoSubTitle = binding.editTextField2.text.toString().trim()
 
         if (todoTitle.isEmpty() || todoSubTitle.isEmpty()) {
             // Show an alert dialog for empty fields

@@ -55,8 +55,8 @@ class AddTaskActivity : AppCompatActivity() {
         val todoSubTitle: String
 
         with(binding.inclAddTaskForm) {
-            todoTitle = editTextField1.text.toString()
-            todoSubTitle = editTextField2.text.toString()
+            todoTitle = editTextField1.text.toString().trim()
+            todoSubTitle = editTextField2.text.toString().trim()
         }
 
         if (todoTitle.isEmpty() || todoSubTitle.isEmpty()) {

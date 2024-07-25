@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -38,7 +39,9 @@ class TodoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        binding.bottomNavigationTodo.selectedItemId = R.id.navigation_all
         getAllTodo()
+
     }
     private fun getUncompletedTodo() {
         todoViewModel.fetchAllUncompletedTodos(this)
@@ -68,18 +71,33 @@ class TodoActivity : AppCompatActivity() {
             },
             onDeleteClick = { position ->
                 lifecycleScope.launch(Dispatchers.IO) {
-                    withContext(Dispatchers.Main) {
+                val builder = AlertDialog.Builder(this@TodoActivity)
+                builder.setTitle("Confirmation")
+                builder.setMessage("Do you want to delete this task?")
+                builder.setPositiveButton("Yes") { dialog, _ ->
+                    lifecycleScope.launch(Dispatchers.IO) {
                         if (todoViewModel.delete(position) == 1) {
-                            Toast.makeText(
+                            withContext(Dispatchers.Main) {Toast.makeText(
                                 this@TodoActivity,
                                 "Task deleted successfully",
                                 Toast.LENGTH_LONG
                             ).show()
+                            }
                         }
                     }
-
-                    withContext(Dispatchers.Main) { todoAdapter.notifyItemRemoved(position) }
+                    dialog.dismiss()
                 }
+                builder.setNegativeButton("No") { dialog, _ ->
+                    dialog.dismiss()
+                }
+
+
+
+                withContext(Dispatchers.Main) {
+                    val alert = builder.create()
+                    alert.show()
+                    todoAdapter.notifyItemRemoved(position) }
+            }
 
             },
             onCompleteClick = { todo ->
