@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.todoapp.R
 import com.example.todoapp.databinding.ActivityEditTaskBinding
 import com.example.todoapp.entity.Todo
+import com.example.todoapp.util.DialogUtils
 import com.example.todoapp.viewmodel.TodoViewModel
 import kotlinx.coroutines.launch
 
@@ -35,8 +36,8 @@ class EditTaskActivity : AppCompatActivity() {
         todo = intent.getSerializableExtra("TODO") as Todo
 
 
-        binding.editTextField1.setText(todo.title  )
-        binding.editTextField2.setText(todo.subtitle )
+        binding.editTextField1.setText(todo.title)
+        binding.editTextField2.setText(todo.subtitle)
 
         binding.buttonUpdate.setOnClickListener {
             confirmUpdateTask()
@@ -53,58 +54,51 @@ class EditTaskActivity : AppCompatActivity() {
 
         if (todoTitle.isEmpty() || todoSubTitle.isEmpty()) {
             // Show an alert dialog for empty fields
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Input Error")
-            builder.setMessage("Title and Detail cannot be empty")
-            builder.setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            val alert = builder.create()
-            alert.show()
+            DialogUtils.showAlert(
+                context = this, title = "Input Error",
+                message = "Title and Detail cannot be empty"
+            )
         } else {
             // Show confirmation dialog before updating
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Confirmation")
-            builder.setMessage("Do you want to update this task?")
-            builder.setPositiveButton("Yes") { dialog, _ ->
-                updateTask(todoTitle, todoSubTitle)
-                dialog.dismiss()
-            }
-            builder.setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss()
-            }
-            val alert = builder.create()
-            alert.show()
+            DialogUtils.showAlert(
+                context = this, title = "Confirmation",
+                message = "Do you want to update this task?",
+                positiveButtonText = "Yes",
+                positiveButtonAction = {
+                    updateTask(todoTitle, todoSubTitle)
+                }
+            )
         }
     }
 
     private fun updateTask(todoTitle: String, todoSubTitle: String) {
-                val updatedTodo = Todo(
-                    id = (todo.id),
-                    title = todoTitle,
-                    subtitle = todoSubTitle,
-                    isCompleted = todo.isCompleted, // Adjust this based on your requirements
-                    timestamp = todo.timestamp // Adjust this based on your requirements
-                )
+        val updatedTodo = Todo(
+            id = (todo.id),
+            title = todoTitle,
+            subtitle = todoSubTitle,
+            isCompleted = todo.isCompleted, // Adjust this based on your requirements
+            timestamp = todo.timestamp ,// Adjust this based on your requirements
+            notes = todo.notes
+        )
 
-                lifecycleScope.launch {
-                    if (todoViewModel.update(updatedTodo) == 1) {
-                        Toast.makeText(
-                            this@EditTaskActivity,
-                            "Task updated successfully",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        finish() // Close the activity after updating the task
-                    } else {
-                        Toast.makeText(
-                            this@EditTaskActivity,
-                            "Task update failed",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
+        lifecycleScope.launch {
+            if (todoViewModel.update(updatedTodo) == 1) {
+                Toast.makeText(
+                    this@EditTaskActivity,
+                    "Task updated successfully",
+                    Toast.LENGTH_LONG
+                ).show()
 
+                finish() // Close the activity after updating the task
 
+            } else {
+                Toast.makeText(
+                    this@EditTaskActivity,
+                    "Task update failed",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
 
 
     }

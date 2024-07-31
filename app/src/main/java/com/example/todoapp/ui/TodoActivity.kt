@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,6 +14,7 @@ import com.example.todoapp.R
 import com.example.todoapp.databinding.ActivityTodoBinding
 import com.example.todoapp.viewmodel.TodoViewModel
 import com.example.todoapp.adapter.TodoAdapter
+import com.example.todoapp.util.DialogUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,15 +41,14 @@ class TodoActivity : AppCompatActivity() {
         super.onResume()
         binding.bottomNavigationTodo.selectedItemId = R.id.navigation_all
         getAllTodo()
-
     }
+
     private fun getUncompletedTodo() {
         todoViewModel.fetchAllUncompletedTodos(this)
     }
 
     private fun getAllTodo() {
         todoViewModel.fetchAllTodos(this)
-
     }
 
     private fun setupToolbar() {
@@ -64,41 +63,35 @@ class TodoActivity : AppCompatActivity() {
             onEditClick = { todo ->
                 val intent = Intent(this, EditTaskActivity::class.java).apply {
                     putExtra("TODO", todo)
-
                 }
                 startActivity(intent)
-
             },
             onDeleteClick = { position ->
                 lifecycleScope.launch(Dispatchers.IO) {
-                val builder = AlertDialog.Builder(this@TodoActivity)
-                builder.setTitle("Confirmation")
-                builder.setMessage("Do you want to delete this task?")
-                builder.setPositiveButton("Yes") { dialog, _ ->
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        if (todoViewModel.delete(position) == 1) {
-                            withContext(Dispatchers.Main) {Toast.makeText(
-                                this@TodoActivity,
-                                "Task deleted successfully",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            }
-                        }
+                    withContext(Dispatchers.Main) {
+                        DialogUtils.showAlert(
+                            context = this@TodoActivity,
+                            title = "Confirmation",
+                            message = "Do you want to delete this task?",
+                            positiveButtonText = "Yes",
+                            positiveButtonAction = {
+                                lifecycleScope.launch(Dispatchers.IO) {
+                                    if (todoViewModel.delete(position) == 1) {
+                                        withContext(Dispatchers.Main) {
+                                            Toast.makeText(
+                                                this@TodoActivity,
+                                                "Task deleted successfully",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            todoAdapter.notifyItemRemoved(position)
+                                        }
+                                    }
+                                }
+                            },
+                            negativeButtonText = "No"
+                        )
                     }
-                    dialog.dismiss()
                 }
-                builder.setNegativeButton("No") { dialog, _ ->
-                    dialog.dismiss()
-                }
-
-
-
-                withContext(Dispatchers.Main) {
-                    val alert = builder.create()
-                    alert.show()
-                    todoAdapter.notifyItemRemoved(position) }
-            }
-
             },
             onCompleteClick = { todo ->
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -121,27 +114,23 @@ class TodoActivity : AppCompatActivity() {
         binding.fabAddTask.setOnClickListener {
             addItem()
         }
-
     }
 
     private fun setupBottomNavigation() {
         with(binding.bottomNavigationTodo) {
-
-             selectedItemId = 0
+            selectedItemId = 0
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.navigation_all -> {
                         // Show all the tasks
                         getAllTodo()
                     }
-
                     R.id.navigation_completed -> {
                         // Start CompletedTaskActivity
                         val intent = Intent(this@TodoActivity, CompletedTasksActivity::class.java)
                         startActivity(intent)
                         true
                     }
-
                     else -> false
                 }
                 return@setOnItemSelectedListener true

@@ -11,6 +11,7 @@ data class Todo(
                 val title: String,
                 val subtitle: String,
                 val isCompleted: Boolean,
-                val timestamp:Long = System.currentTimeMillis()
+                val timestamp:Long = System.currentTimeMillis(),
+                val notes: String? = null // Ensure this is nullable
 
 ): Serializable

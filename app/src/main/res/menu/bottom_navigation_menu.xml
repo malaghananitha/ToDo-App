@@ -3,10 +3,10 @@
     <item
         android:id="@+id/navigation_all"
         android:icon="@drawable/ic_all"
-        android:title="All" />
+        android:title="@string/all" />
     <item
         android:id="@+id/navigation_completed"
         android:icon="@drawable/ic_ticked"
-        android:title="Completed"
+        android:title="@string/completed"
         />
 </menu>

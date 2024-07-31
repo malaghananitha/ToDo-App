@@ -42,8 +42,10 @@ class CompletedTasksActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+
+
         completedTodoAdapter = TodoAdapter(
-            onEditClick = { todo -> /* Handle edit click if necessary */ },
+            onEditClick = { /* Handle edit click if necessary */ },
             onDeleteClick = { todo ->
                 // Handle delete click
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -56,7 +58,7 @@ class CompletedTasksActivity : AppCompatActivity() {
                     }
                 }
             },
-            onCompleteClick = { todo -> /* Handle complete click if necessary */ }
+            onCompleteClick = {   /* Handle complete click if necessary */ }
         )
         binding.recyclerViewCompletedTasks.apply {
             adapter = completedTodoAdapter

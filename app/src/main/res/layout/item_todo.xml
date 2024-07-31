@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:text="TODO TITLE"
+                android:text="@string/todo_title_in_view"
                 android:textColor="@color/primary_color"
                 android:textSize="17sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="TODO SUB TITLE"
+                android:text="@string/todo_sub_title"
                 style="@style/CommonCustomTextStyle"
                 app:layout_constraintStart_toStartOf="@+id/tv_todo_title"
                 app:layout_constraintTop_toBottomOf="@+id/tv_todo_title" />

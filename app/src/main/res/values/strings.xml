@@ -13,4 +13,13 @@
     <string name="add_task">Add Task</string>
     <string name="add">Add</string>
     <string name="edit_task">Edit Task</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="todo_sub_title">TODO SUB TITLE</string>
+    <string name="todo_title_in_view">TODO TITLE</string>
+    <string name="field_2">Field 2</string>
+    <string name="field_1">Field 1</string>
+    <string name="action">ACTION</string>
+    <string name="completed">Completed</string>
+    <string name="all">All</string>
 </resources>

@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.todoapp.R
 import com.example.todoapp.databinding.ActivityAddTaskBinding
 import com.example.todoapp.entity.Todo
+import com.example.todoapp.util.DialogUtils
 import com.example.todoapp.viewmodel.TodoViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -42,11 +43,11 @@ class AddTaskActivity : AppCompatActivity() {
 
             // Set click listener for the button
             buttonAction.setOnClickListener {
-                    addTask()
-                }
+                addTask()
             }
-
         }
+
+    }
 
     private fun addTask() {
 
@@ -61,40 +62,35 @@ class AddTaskActivity : AppCompatActivity() {
 
         if (todoTitle.isEmpty() || todoSubTitle.isEmpty()) {
             // Show an alert dialog for empty fields
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Input Error")
-            builder.setMessage("todoTitle and todoSubTitle cannot be empty")
-            builder.setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-            }
-            val alert = builder.create()
-            alert.show()
+            DialogUtils.showAlert(
+                context = this, title = "Input Error",
+                message = "Todo Title and Todo Sub Title cannot be empty"
+            )
         } else {
             //Toast.makeText(this, "Working on database to store", Toast.LENGTH_LONG).show()
 
-             lifecycleScope.launch {
-                 val status :Long =  async {
-                     todoViewModel.insert(
-                         Todo(
-                             title = todoTitle,
-                             subtitle = todoSubTitle,
-                             isCompleted = false
-                         )
-                     )
-                 }.await()
-
-                 if (status > 0) {
-                     Toast.makeText(
-                         this@AddTaskActivity,
-                         "Task inserted successfully",
-                         Toast.LENGTH_LONG
-                     ).show()
-                     finish()
-                 }
-             }
+            lifecycleScope.launch {
+                val status: Long = async {
+                    todoViewModel.insert(
+                        Todo(
+                            title = todoTitle,
+                            subtitle = todoSubTitle,
+                            isCompleted = false,
+                            notes = "Default Note" // Pass a constant value for notes
+                        )
+                    )
+                }.await()
 
 
-
+                if (status > 0) {
+                    Toast.makeText(
+                        this@AddTaskActivity,
+                        "Task inserted successfully",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    finish()
+                }
+            }
 
 
         }

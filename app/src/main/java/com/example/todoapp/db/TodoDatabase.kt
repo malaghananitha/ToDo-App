@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.todoapp.dao.TodoDao
 import com.example.todoapp.entity.Todo
 
 
-@Database(entities = [Todo:: class], version = 1)
+@Database(entities = [Todo:: class], version = 2)
 abstract class TodoDatabase: RoomDatabase() {
     abstract fun todoDao(): TodoDao
     companion object {
@@ -22,6 +23,7 @@ abstract class TodoDatabase: RoomDatabase() {
                     ctx.applicationContext, TodoDatabase::class.java,
                     "todo_database"
                 )
+                    .addMigrations(MIGRATION_1_2)
                     .addCallback(roomCallback)
                     .build()
 
@@ -34,5 +36,12 @@ abstract class TodoDatabase: RoomDatabase() {
                 super.onCreate(db)
             }
         }
+    }
+}
+// Define the migration from version 1 to version 2
+val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        // Add the new column 'notes' to the 'todo_table'
+        database.execSQL("ALTER TABLE todo_table ADD COLUMN notes TEXT")
     }
 }
